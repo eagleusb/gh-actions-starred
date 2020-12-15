@@ -1,0 +1,29 @@
+---
+
+name: "python-starred"
+description: ""
+author: "Leslie-Alexandre DENIS"
+branding:
+  icon: "smile"
+  color: "green"
+
+inputs:
+  who-to-greet:  # id of input
+    description: "Who to greet"
+    required: true
+    default: "World"
+outputs:
+  time: # id of output
+    description: "The time we greeted you"
+runs:
+  using: "docker"
+  #image: "Dockerfile"
+  image: "docker://debian:stretch-slim"
+  pre-if: "runner.os == linux"
+  pre-entrypoint: "setup.sh"
+  entrypoint: "main.sh"
+  post-entrypoint: "cleanup.sh"
+  args:
+    - ${{ inputs.who-to-greet }}
+  env:
+    foo: "bar"
